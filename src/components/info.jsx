@@ -64,13 +64,13 @@ const Info = ({ pokemon }) => {
             <li className="list-group-item list-group-item-action">
               <i className="bi bi bi-heartbreak" style={{ color: 'grey' }}>
                 {' Ataque '}
-                {pokemon.stats[0].base_stat}
+                {pokemon.stats[1].base_stat}
               </i>
             </li>
             <li className="list-group-item list-group-item-action">
               <i className="bi bi-shield-fill" style={{ color: 'black' }}>
                 {' Defensa '}
-                {pokemon.stats[0].base_stat}
+                {pokemon.stats[2].base_stat}
               </i>
             </li>
           </ul>,

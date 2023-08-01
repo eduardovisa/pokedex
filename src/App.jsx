@@ -7,7 +7,7 @@ function App() {
       style={{
         backgroundColor: '#04B2D9',
         paddingLeft: '10vh',
-        paddingRight: '10vh',
+        paddingRight: '8vh',
         paddingBottom: '2vh',
         borderRadius: 10,
       }}
