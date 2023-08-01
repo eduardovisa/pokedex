@@ -17,13 +17,21 @@ const Pokedex = () => {
   const [pokemon, setPokemon] = useState(null);
   const [pokemonID, setPokemonId] = useState(randomID);
 
+  // Función para reiniciar el contador
+  const resetCounter = () => {
+    setCounter(secs);
+  };
+
   // Cambio de estados del timer hasta llegar a 0 y reiniciar
   useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
-    if (counter == 0) {
-      const RandomId = Math.floor(Math.random() * 806 + 1);
-      setPokemonId(RandomId);
+    const timer =
+      counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    if (counter === 0) {
+      const randomId = Math.floor(Math.random() * 806 + 1);
+      setPokemonId(randomId);
+      resetCounter();
     }
+    return () => clearTimeout(timer);
   }, [counter]);
 
   // Fetch de la api para obtener la respuesta o el error
@@ -33,7 +41,6 @@ const Pokedex = () => {
       .then((data) => {
         setPokemon(data);
         setLoading(false);
-        setCounter(secs);
       })
       .catch((err) => {
         console.log(err);
@@ -50,7 +57,7 @@ const Pokedex = () => {
       <div className="container text-center">
         <h1>Pokedéx</h1>
       </div>
-      <Input />
+      <Input setPokemonId={setPokemonId} onSearch={resetCounter} />
       <Info pokemon={pokemon} />
       <h1>{counter}</h1>
     </div>
