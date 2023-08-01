@@ -36,7 +36,11 @@ const Input = ({ setPokemonId, onSearch }) => {
           onChange={handleInputChange}
         />
         <button
-          style={{ backgroundColor: '#FFC107', borderRadius: 0 }}
+          style={{
+            backgroundColor: '#D92546',
+            borderRadius: 0,
+            color: 'white',
+          }}
           className="btn"
           type="button"
           id="button-changePokemon"

@@ -6,3 +6,7 @@ export function capitalizeWord(word) {
 
   return capitalizedWord;
 }
+
+export function randomNumber() {
+  return Math.floor(Math.random() * 806 + 1);
+}

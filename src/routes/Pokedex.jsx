@@ -3,19 +3,19 @@ import { useState, useEffect } from 'react';
 import Input from '../components/input';
 import Info from '../components/info';
 
+import { randomNumber } from '../functions';
+
 // Indicador de segundos para cambio de Pokemón
-const secs = 10;
+const secs = 30;
 
 const Pokedex = () => {
   // Estado del contador indicando el segundo actual
   const [counter, setCounter] = useState(secs);
 
-  // Número random de ID con función Math
-  const randomID = Math.floor(Math.random() * 806 + 1);
   // Variables usadas para determinar el estado del fetch y guardar la data obtenida
   const [loading, setLoading] = useState(true);
   const [pokemon, setPokemon] = useState(null);
-  const [pokemonID, setPokemonId] = useState(randomID);
+  const [pokemonID, setPokemonId] = useState(randomNumber);
 
   const [searchSuccessful, setSearchSuccessful] = useState(false);
 
@@ -29,8 +29,7 @@ const Pokedex = () => {
     const timer =
       counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
     if (counter === 0 && searchSuccessful) {
-      const randomId = Math.floor(Math.random() * 806 + 1);
-      setPokemonId(randomId);
+      setPokemonId(randomNumber);
       resetCounter();
     }
 
@@ -75,22 +74,54 @@ const Pokedex = () => {
           />
           <h1>Pokedex</h1>
         </div>
-        <div className="col-lg-4 col-md-12">
-          <div className="container">
-            <div className="row flex-column">
-              <div className="col">
-                <i className="bi bi-clock"></i>
-                <h4>{counter}</h4>
-              </div>
-              <div className="col"></div>
-            </div>
-          </div>
+        <div className="col-lg-4 col-md-12 d-flex align-items-center h-100 justify-content-center">
+          <i className="bi bi-clock">
+            <h4>{counter}</h4>
+          </i>
         </div>
       </div>
       <Input
         setPokemonId={setPokemonId}
         onSearch={() => setSearchSuccessful(true)}
       />
+      <div className="container text-center">
+        <div className="row">
+          <div className="col">
+            <button
+              style={{ backgroundColor: '#FFC107', borderRadius: 10 }}
+              className="btn"
+              type="button"
+              id="button-changePokemon"
+              onClick={() => setPokemonId(randomNumber)}
+            >
+              Aleatorio
+            </button>
+          </div>
+          {/* <div className="col">
+            <button
+              style={{ backgroundColor: 'pink', borderRadius: 0 }}
+              className="btn"
+              type="button"
+              id="button-changePokemon"
+              onClick={() => setPokemonId(randomNumber)}
+            >
+              <i className="bi bi-suit-heart-fill" style={{ color: 'red' }}></i>
+            </button>
+          </div>
+          <div className="col">
+            <button
+              style={{ backgroundColor: 'pink', borderRadius: 0 }}
+              className="btn"
+              type="button"
+              id="button-changePokemon"
+              onClick={() => setPokemonId(randomNumber)}
+            >
+              Guardar
+            </button>
+          </div> */}
+        </div>
+      </div>
+
       <Info pokemon={pokemon} />
     </div>
   );
