@@ -4,7 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { capitalizeWord } from '../functions';
 
-const acordion = (children, title) => {
+const acordion = (children, id, title) => {
   return (
     <div className="accordion-item">
       <h2 className="accordion-header">
@@ -12,15 +12,15 @@ const acordion = (children, title) => {
           className="accordion-button"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target={`#${title}`}
+          data-bs-target={`#${id}`}
           aria-expanded="false"
-          aria-controls={title}
+          aria-controls={id}
         >
-          Estadísticas
+          {title}
         </button>
       </h2>
       <div
-        id={title}
+        id={id}
         className="accordion-collapse collapse"
         data-bs-parent="#accordionInfo"
       >
@@ -74,7 +74,8 @@ const Info = ({ pokemon }) => {
               </i>
             </li>
           </ul>,
-          'collapseOne'
+          'collapseOne',
+          'Estadísticas'
         )}
         {acordion(
           <ul className="list-group list-group-flush">
@@ -93,7 +94,8 @@ const Info = ({ pokemon }) => {
               );
             })}
           </ul>,
-          'collapseTwo'
+          'collapseTwo',
+          'Habilidades'
         )}
       </div>
     </div>

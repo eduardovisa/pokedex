@@ -64,16 +64,34 @@ const Pokedex = () => {
   }
 
   return (
-    <div className="container">
-      <div className="container text-center">
-        <h1>Pokedéx</h1>
+    <div className="container text-center">
+      <div className="row d-flex align-items-center mb-4">
+        <div className="col-lg-8 col-md-12">
+          <img
+            className="my-4"
+            width="20%"
+            src="https://cdn-icons-png.flaticon.com/256/287/287221.png"
+            alt=""
+          />
+          <h1>Pokedex</h1>
+        </div>
+        <div className="col-lg-4 col-md-12">
+          <div className="container">
+            <div className="row flex-column">
+              <div className="col">
+                <i className="bi bi-clock"></i>
+                <h4>{counter}</h4>
+              </div>
+              <div className="col"></div>
+            </div>
+          </div>
+        </div>
       </div>
       <Input
         setPokemonId={setPokemonId}
         onSearch={() => setSearchSuccessful(true)}
       />
       <Info pokemon={pokemon} />
-      <h1>{counter}</h1>
     </div>
   );
 };
