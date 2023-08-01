@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+
 import Input from '../components/input';
+import Info from '../components/info';
 
 // Indicador de segundos para cambio de Pokemón
 const secs = 10;
@@ -15,26 +17,30 @@ const Pokedex = () => {
   const [pokemon, setPokemon] = useState(null);
   const [pokemonID, setPokemonId] = useState(randomID);
 
+  // Función para reiniciar el contador
+  const resetCounter = () => {
+    setCounter(secs);
+  };
+
+  // Cambio de estados del timer hasta llegar a 0 y reiniciar
   useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    const timer =
+      counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    if (counter === 0) {
+      const randomId = Math.floor(Math.random() * 806 + 1);
+      setPokemonId(randomId);
+      resetCounter();
+    }
+    return () => clearTimeout(timer);
   }, [counter]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const RandomId = Math.floor(Math.random() * 806 + 1);
-      setPokemonId(RandomId);
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [pokemonID]);
-
+  // Fetch de la api para obtener la respuesta o el error
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
       .then((res) => res.json())
       .then((data) => {
         setPokemon(data);
         setLoading(false);
-        setCounter(secs);
       })
       .catch((err) => {
         console.log(err);
@@ -47,12 +53,14 @@ const Pokedex = () => {
   }
 
   return (
-    <section>
-      <h1>Pokedéx</h1>
-      <Input />
-      <h3>{pokemon.name}</h3>
+    <div className="container">
+      <div className="container text-center">
+        <h1>Pokedéx</h1>
+      </div>
+      <Input setPokemonId={setPokemonId} onSearch={resetCounter} />
+      <Info pokemon={pokemon} />
       <h1>{counter}</h1>
-    </section>
+    </div>
   );
 };
 
