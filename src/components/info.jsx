@@ -13,7 +13,7 @@ const acordion = (children, title) => {
           type="button"
           data-bs-toggle="collapse"
           data-bs-target={`#${title}`}
-          aria-expanded="true"
+          aria-expanded="false"
           aria-controls={title}
         >
           Estadísticas
@@ -21,7 +21,7 @@ const acordion = (children, title) => {
       </h2>
       <div
         id={title}
-        className="accordion-collapse collapse show"
+        className="accordion-collapse collapse"
         data-bs-parent="#accordionInfo"
       >
         <div className="accordion-body">{children}</div>

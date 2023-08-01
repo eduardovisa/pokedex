@@ -17,6 +17,8 @@ const Pokedex = () => {
   const [pokemon, setPokemon] = useState(null);
   const [pokemonID, setPokemonId] = useState(randomID);
 
+  const [searchSuccessful, setSearchSuccessful] = useState(false);
+
   // Función para reiniciar el contador
   const resetCounter = () => {
     setCounter(secs);
@@ -26,25 +28,34 @@ const Pokedex = () => {
   useEffect(() => {
     const timer =
       counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
-    if (counter === 0) {
+    if (counter === 0 && searchSuccessful) {
       const randomId = Math.floor(Math.random() * 806 + 1);
       setPokemonId(randomId);
       resetCounter();
     }
+
     return () => clearTimeout(timer);
-  }, [counter]);
+  }, [counter, searchSuccessful]);
 
   // Fetch de la api para obtener la respuesta o el error
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
       .then((res) => res.json())
       .then((data) => {
-        setPokemon(data);
-        setLoading(false);
+        if (data) {
+          setPokemon(data);
+          setLoading(false);
+          resetCounter();
+          setSearchSuccessful(true);
+        } else {
+          setLoading(false);
+          setSearchSuccessful(false);
+        }
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
+        setSearchSuccessful(false);
       });
   }, [pokemonID]);
 
@@ -57,7 +68,10 @@ const Pokedex = () => {
       <div className="container text-center">
         <h1>Pokedéx</h1>
       </div>
-      <Input setPokemonId={setPokemonId} onSearch={resetCounter} />
+      <Input
+        setPokemonId={setPokemonId}
+        onSearch={() => setSearchSuccessful(true)}
+      />
       <Info pokemon={pokemon} />
       <h1>{counter}</h1>
     </div>
