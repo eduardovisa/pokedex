@@ -6,7 +6,7 @@ import Info from '../components/info';
 import { randomNumber } from '../functions';
 
 // Indicador de segundos para cambio de Pokemón
-const secs = 30;
+const secs = 3;
 
 const Pokedex = () => {
   // Estado del contador indicando el segundo actual
@@ -31,6 +31,11 @@ const Pokedex = () => {
     if (counter === 0 && searchSuccessful) {
       setPokemonId(randomNumber);
       resetCounter();
+      setSearchSuccessful(false);
+    } else if (counter === 0) {
+      setPokemonId(randomNumber);
+      resetCounter();
+      setSearchSuccessful(false);
     }
 
     return () => clearTimeout(timer);
