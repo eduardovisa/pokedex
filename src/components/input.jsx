@@ -10,7 +10,7 @@ const Input = ({ setPokemonId, onSearch }) => {
   };
 
   const handleSearchClick = () => {
-    setPokemonId(inputValue);
+    setPokemonId(inputValue.toLowerCase());
     onSearch();
     setInputValue('');
   };
@@ -20,7 +20,7 @@ const Input = ({ setPokemonId, onSearch }) => {
       <span
         className="input-group-text mb-2 mb-md-0 order-md-0 d-md-flex align-items-center justify-content-center"
         id="basic-addon1"
-        style={{ fontWeight: 'bold', borderRadius: 0 }}
+        style={{ fontWeight: 'bold' }}
       >
         ID / Nombre
       </span>
