@@ -4,6 +4,7 @@ import Input from '../components/input';
 import Info from '../components/info';
 
 import { randomNumber } from '../functions';
+import Historial from './Historial';
 
 // Indicador de segundos para cambio de Pokemón
 const secs = 30;
@@ -24,6 +25,30 @@ const Pokedex = () => {
     setCounter(secs);
   };
 
+  const postPokemon = async (pokemonData) => {
+    try {
+      const response = await fetch(
+        'https://anacardiaceous-surg.000webhostapp.com/api/index',
+        {
+          method: 'POST',
+          body: JSON.stringify(pokemonData),
+          headers: {
+            'Content-type': 'application/json',
+            Accept: 'application/json',
+          },
+        }
+      );
+
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error('Failed to post Pokemon data');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Cambio de estados del timer hasta llegar a 0 y reiniciar
   useEffect(() => {
     const timer =
@@ -39,7 +64,7 @@ const Pokedex = () => {
     }
 
     return () => clearTimeout(timer);
-  }, [counter, searchSuccessful]);
+  }, [counter, pokemon, searchSuccessful]);
 
   // Fetch de la api para obtener la respuesta o el error
   useEffect(() => {
@@ -62,6 +87,18 @@ const Pokedex = () => {
         setSearchSuccessful(false);
       });
   }, [pokemonID]);
+
+  useEffect(() => {
+    if (pokemon) {
+      postPokemon({
+        Nombre: pokemon.name ? pokemon.name : '',
+        Imagen: pokemon.sprites?.front_default
+          ? pokemon.sprites.front_default
+          : '',
+        Valor: pokemon.id ? pokemon.id.toString() : '',
+      });
+    }
+  }, [pokemon]);
 
   if (loading) {
     return <h1>Cargando...</h1>;
@@ -90,7 +127,7 @@ const Pokedex = () => {
         onSearch={() => setSearchSuccessful(true)}
       />
       <div className="container text-center">
-        <div className="row">
+        <div className="row gap-1">
           <div className="col">
             <button
               style={{ backgroundColor: '#FFC107', borderRadius: 10 }}
@@ -102,6 +139,62 @@ const Pokedex = () => {
               Aleatorio
             </button>
           </div>
+          <div className="col">
+            <button
+              data-bs-target="#modalHistorial"
+              data-bs-toggle="modal"
+              style={{ backgroundColor: '#FFC107', borderRadius: 10 }}
+              className="btn"
+              type="button"
+              id="button-changePokemon"
+            >
+              Historial
+            </button>
+          </div>
+
+          <div
+            className="modal fade"
+            id="modalHistorial"
+            aria-hidden="true"
+            aria-labelledby="modalToggleLabel"
+            tabIndex="-1"
+          >
+            <div className="modal-dialog modal-fullscreen">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1
+                    className="modal-title fs-5"
+                    id="exampleModalToggleLabel"
+                    style={{ color: 'black' }}
+                  >
+                    Historial
+                  </h1>
+                  <button
+                    className="btn btn-primary"
+                    type="button"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    Cerrar
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <Historial pokemonID={parseInt(pokemonID)} />
+                </div>
+                <div className="modal-footer">
+                  <button
+                    className="btn btn-primary"
+                    type="button"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* <div className="col">
             <button
               style={{ backgroundColor: 'pink', borderRadius: 0 }}
