@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-
 import Input from '../components/input';
 import Info from '../components/info';
-
 import { randomNumber } from '../functions';
 import Historial from './Historial';
 
@@ -25,10 +23,16 @@ const Pokedex = () => {
     setCounter(secs);
   };
 
+  // Función para manejar el click del botón "Historial"
+  const handleHistorialClick = () => {
+    // Configuramos el estado de pokemonID al valor actual
+    setPokemonId(pokemonID);
+  };
+
   const postPokemon = async (pokemonData) => {
     try {
       const response = await fetch(
-        'https://anacardiaceous-surg.000webhostapp.com/api/index',
+        'https://pokedex.cursospremed.com/api/index',
         {
           method: 'POST',
           body: JSON.stringify(pokemonData),
@@ -38,8 +42,6 @@ const Pokedex = () => {
           },
         }
       );
-
-      console.log(response);
 
       if (!response.ok) {
         throw new Error('Failed to post Pokemon data');
@@ -88,14 +90,15 @@ const Pokedex = () => {
       });
   }, [pokemonID]);
 
+  // Llamamos al método postPokemon solo cuando cambia el estado de pokemon (cuando se obtiene un nuevo Pokémon)
   useEffect(() => {
     if (pokemon) {
       postPokemon({
-        Nombre: pokemon.name ? pokemon.name : '',
-        Imagen: pokemon.sprites?.front_default
+        nombre: pokemon.name ? pokemon.name : '',
+        imagen: pokemon.sprites?.front_default
           ? pokemon.sprites.front_default
           : '',
-        Valor: pokemon.id ? pokemon.id.toString() : '',
+        valor: pokemon.id ? pokemon.id.toString() : '',
       });
     }
   }, [pokemon]);
@@ -147,6 +150,7 @@ const Pokedex = () => {
               className="btn"
               type="button"
               id="button-changePokemon"
+              onClick={handleHistorialClick}
             >
               Historial
             </button>
