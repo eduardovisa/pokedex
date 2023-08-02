@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from '../components/input';
 import Info from '../components/info';
 import { randomNumber } from '../functions';
 import Historial from './Historial';
 
-// Indicador de segundos para cambio de Pokemón
+// Indicador de segundos para cambio de Pokémon
 const secs = 30;
 
 const Pokedex = () => {
@@ -15,7 +15,7 @@ const Pokedex = () => {
   const [loading, setLoading] = useState(true);
   const [pokemon, setPokemon] = useState(null);
   const [pokemonID, setPokemonId] = useState(randomNumber);
-
+  const [lastPokemonID, setLastPokemonID] = useState(null); // Nuevo estado
   const [searchSuccessful, setSearchSuccessful] = useState(false);
 
   // Función para reiniciar el contador
@@ -25,8 +25,8 @@ const Pokedex = () => {
 
   // Función para manejar el click del botón "Historial"
   const handleHistorialClick = () => {
-    // Configuramos el estado de pokemonID al valor actual
-    setPokemonId(pokemonID);
+    // Configuramos el estado de lastPokemonID con el valor actual de pokemonID
+    setLastPokemonID(pokemonID);
   };
 
   const postPokemon = async (pokemonData) => {
@@ -137,7 +137,10 @@ const Pokedex = () => {
               className="btn"
               type="button"
               id="button-changePokemon"
-              onClick={() => setPokemonId(randomNumber)}
+              onClick={() => {
+                setPokemonId(randomNumber);
+                setLastPokemonID(pokemonID);
+              }}
             >
               Aleatorio
             </button>
@@ -183,7 +186,7 @@ const Pokedex = () => {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <Historial pokemonID={parseInt(pokemonID)} />
+                  <Historial pokemonID={parseInt(lastPokemonID)} />
                 </div>
                 <div className="modal-footer">
                   <button

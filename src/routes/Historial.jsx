@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 
 const Historial = ({ pokemonID }) => {
   const [pokemones, setPokemones] = useState([]);
@@ -16,17 +16,17 @@ const Historial = ({ pokemonID }) => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('https://pokedex.cursospremed.com/api/pokemones')
+    fetch(`https://pokedex.cursospremed.com/api/pokemones?id_lte=${pokemonID}`)
       .then((res) => res.json())
       .then((data) => {
-        setPokemones(data);
+        setPokemones(data.pokemones);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
       });
-  }, []); // Aquí usamos un arreglo de dependencias vacío
+  }, [pokemonID]);
 
   if (loading) {
     return <div>Cargando...</div>;
@@ -62,10 +62,10 @@ const Historial = ({ pokemonID }) => {
                     />
                     <div className="card-body">
                       <h5 className="card-title">{pokemon.nombre}</h5>
-                      <p className="card-text">
+                      {/* <p className="card-text">
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </div>
