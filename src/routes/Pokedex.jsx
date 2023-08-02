@@ -142,10 +142,10 @@ const Pokedex = () => {
                 setLastPokemonID(pokemonID);
               }}
             >
-              Aleatorio
+              Mostrar Pokemón
             </button>
           </div>
-          <div className="col">
+          <div className="col-12">
             <button
               data-bs-target="#modalHistorial"
               data-bs-toggle="modal"
@@ -155,7 +155,7 @@ const Pokedex = () => {
               id="button-changePokemon"
               onClick={handleHistorialClick}
             >
-              Historial
+              Mostrar Pokemón Guardados
             </button>
           </div>
 
@@ -174,7 +174,7 @@ const Pokedex = () => {
                     id="exampleModalToggleLabel"
                     style={{ color: 'black' }}
                   >
-                    Historial
+                    Pokemón Guardados
                   </h1>
                   <button
                     className="btn btn-primary"
