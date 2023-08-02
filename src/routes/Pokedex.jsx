@@ -188,16 +188,6 @@ const Pokedex = () => {
                 <div className="modal-body">
                   <Historial pokemonID={parseInt(lastPokemonID)} />
                 </div>
-                <div className="modal-footer">
-                  <button
-                    className="btn btn-primary"
-                    type="button"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    Cerrar
-                  </button>
-                </div>
               </div>
             </div>
           </div>
