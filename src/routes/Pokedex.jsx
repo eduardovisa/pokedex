@@ -6,7 +6,7 @@ import Info from '../components/info';
 import { randomNumber } from '../functions';
 
 // Indicador de segundos para cambio de Pokemón
-const secs = 3;
+const secs = 30;
 
 const Pokedex = () => {
   // Estado del contador indicando el segundo actual

@@ -6,7 +6,7 @@ function App() {
     <div
       style={{
         backgroundColor: '#04B2D9',
-        paddingLeft: '10vh',
+        paddingLeft: '8vh',
         paddingRight: '8vh',
         paddingBottom: '2vh',
         borderRadius: 10,
